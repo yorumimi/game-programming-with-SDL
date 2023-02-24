@@ -3,4 +3,5 @@ project(quince)
 
 set(QUINCE_BUILD_TARGET_ALL ON)
 add_subdirectory(cmake/quince)
+add_subdirectory(cmake/dependencies)
 add_subdirectory(examples/game)

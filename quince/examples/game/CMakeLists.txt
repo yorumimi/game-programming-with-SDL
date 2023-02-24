@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.20)
 project(game CXX)
 
+
+include(FetchContent)
+
 set(PRODUCT_NAME game)
 set(QUINCE_DIR "../..")
 set(CMAKE_CONFIGURATION_TYPES Debug Release)
@@ -42,6 +45,21 @@ if(NOT QUINCE_BUILD_TARGET_ALL)
     add_subdirectory(${QUINCE_DIR}/cmake/quince ${CMAKE_CURRENT_BINARY_DIR}/quince_build)
 endif()
 
-target_link_libraries(${PRODUCT_NAME} quince_static)
+FetchContent_MakeAvailable(
+    SDL2 
+    SDL2_IMAGE 
+    glfw
+)
+
+set(SDL2main SDL2-static)
+target_include_directories("${PROJECT_NAME}" PRIVATE include)
+
+target_link_libraries("${PROJECT_NAME}" PRIVATE
+    quince_static
+    SDL2main 
+    SDL2-static 
+    SDL2_image 
+    glfw
+ )
 
 set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT game)
